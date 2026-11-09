@@ -51,5 +51,5 @@ editor), `DocumentGroup` app. These files were written without being compiled.
 ## Open decisions
 - Deployment target is macOS 26.6.2 (Xcode default); PLAN.md assumes 14. Ask before changing.
 - Project still lists iOS/visionOS destinations; the AppKit code is macOS-only.
-- Finder double-click for `.md` needs an Info.plist document-type declaration (not done yet).
+- `.md` document/imported type is declared in `SumiMD/Info.plist` (merged into the generated plist via `INFOPLIST_FILE`). Keep it outside the synced `SumiMD/SumiMD/` folder.
 - Distribution (App Store vs direct), pricing, domain: see PLAN.md.
