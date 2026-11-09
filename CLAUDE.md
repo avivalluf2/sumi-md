@@ -39,10 +39,17 @@ xcodebuild -project SumiMD/SumiMD.xcodeproj -scheme SumiMD -destination 'platfor
 - Do not commit `xcuserdata/`, `DerivedData/` or `.DS_Store` (covered by `.gitignore`).
 
 ## Current state
-Milestone 1 (skeleton) is done: `MarkdownDocument` (open/save `.md`), `MarkdownTextView`
-(plain-text editor), `DocumentGroup` app. Builds, runs, and saves text unchanged.
-Next: Milestone 2 (styling) on branch `milestone-2-styling`: add `swift-markdown`, a unit-test
-target, a styler that maps the parse tree to text attributes, and hook it into the editor.
+Milestone 1 (skeleton) is done. Milestone 2 (styling) in progress on `milestone-2-styling`:
+- `MarkdownSourceMap`: swift-markdown line/UTF-8 column -> UTF-16 offsets (emoji/Hebrew safe).
+- `MarkdownStyler` / `MarkdownParse`: parse tree -> `StyledSpan`s (semantic styles, marker ranges).
+- `MarkdownHighlighter`: reparses on each edit, restyles only the dirty region (blocks around
+  the edit, extended until block layout matches the previous parse).
+- `MarkdownTheme`: styles -> fonts/colors (system colors, dark mode safe).
+- `MarkdownTextView.Coordinator` restyles from `NSTextStorageDelegate.didProcessEditing`.
+- Tests in `SumiMD/SumiMDTests` (Swift Testing). Run with `xcodebuild ... test`.
+- Known: a keystroke in a 430 KB file costs ~76 ms (Release), mostly the full reparse.
+  Revisit in Milestone 4 (parse only a window around the edit).
+- Project-file edits: use `xcrun xcodeproj` (targets, packages, settings), never hand-edit.
 
 ## Notes
 - If `xcodebuild` says it needs Xcode, the active developer dir is Command Line Tools: prefix

@@ -1,8 +1,8 @@
 import SwiftUI
 import AppKit
 
-/// Plain-text editor backed by `NSTextView` (TextKit 2 on current macOS).
-/// Milestone 2 will add live Markdown styling on top of this.
+/// Markdown editor backed by `NSTextView` (TextKit 2 on current macOS), with live styling.
+/// Styling only changes text attributes; the string stays exactly as typed.
 struct MarkdownTextView: NSViewRepresentable {
     @Binding var text: String
 
@@ -33,8 +33,13 @@ struct MarkdownTextView: NSViewRepresentable {
         textView.usesFindBar = true
         textView.isIncrementalSearchingEnabled = true
 
-        textView.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
+        let theme = context.coordinator.theme
+        textView.font = theme.bodyFont
+        textView.typingAttributes = theme.baseAttributes
         textView.textContainerInset = NSSize(width: 16, height: 16)
+
+        // Restyle after every edit (typing, paste, undo, or a new string from the document).
+        textView.textStorage?.delegate = context.coordinator
 
         textView.string = text
         return scrollView
@@ -56,8 +61,10 @@ struct MarkdownTextView: NSViewRepresentable {
         }
     }
 
-    final class Coordinator: NSObject, NSTextViewDelegate {
+    final class Coordinator: NSObject, NSTextViewDelegate, NSTextStorageDelegate {
         var parent: MarkdownTextView
+        let theme = MarkdownTheme()
+        private var highlighter = MarkdownHighlighter()
 
         init(_ parent: MarkdownTextView) {
             self.parent = parent
@@ -66,6 +73,18 @@ struct MarkdownTextView: NSViewRepresentable {
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
             parent.text = textView.string
+        }
+
+        func textStorage(
+            _ textStorage: NSTextStorage,
+            didProcessEditing editedMask: NSTextStorageEditActions,
+            range editedRange: NSRange,
+            changeInLength delta: Int
+        ) {
+            // Only character edits matter; our own attribute changes land here too.
+            guard editedMask.contains(.editedCharacters) else { return }
+            let update = highlighter.update(textStorage.string, editedRange: editedRange, changeInLength: delta)
+            theme.apply(update.spans, in: update.dirtyRange, to: textStorage)
         }
     }
 }
