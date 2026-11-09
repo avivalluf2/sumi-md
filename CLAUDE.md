@@ -19,6 +19,7 @@ xcodebuild -project SumiMD/SumiMD.xcodeproj -scheme SumiMD -destination 'platfor
   `xcodebuild ... test`.
 
 ## Project rules
+- macOS only. Deployment target is macOS 26.6.2 (decided; do not lower without asking).
 - Native only: SwiftUI + AppKit. No Electron, no web editor frameworks.
 - Files are plain `.md`. The editor must keep the text **exactly as typed** (no smart quotes,
   no rewriting). Styling is done with text attributes, never by changing the string.
@@ -49,7 +50,5 @@ editor), `DocumentGroup` app. These files were written without being compiled.
 4. Commit and push (with the user's go-ahead).
 
 ## Open decisions
-- Deployment target is macOS 26.6.2 (Xcode default); PLAN.md assumes 14. Ask before changing.
-- Project still lists iOS/visionOS destinations; the AppKit code is macOS-only.
 - `.md` document/imported type is declared in `SumiMD/Info.plist` (merged into the generated plist via `INFOPLIST_FILE`). Keep it outside the synced `SumiMD/SumiMD/` folder.
 - Distribution (App Store vs direct), pricing, domain: see PLAN.md.

@@ -26,7 +26,7 @@ Not in v1: true WYSIWYG (Typora-style) editing, and split view. Split view can b
 | Editor | `NSTextView` (TextKit 2) wrapped via `NSViewRepresentable` |
 | Parsing / highlighting | `swift-markdown` (cmark-gfm) for parsing; map AST ranges to text attributes |
 | Rendered view | `WKWebView` fed by HTML generated from the same parser, with bundled CSS (light/dark) |
-| Minimum macOS | 14 (Sonoma), to be confirmed |
+| Minimum macOS | 26.6.2 (macOS only) |
 
 ## v1 Features
 - Open, edit, save `.md` files with autosave
@@ -65,4 +65,3 @@ Notes library, wiki-links/graph, sync, plugins, collaboration.
 - Distribution: Mac App Store vs. direct download (design for sandbox either way)
 - Domain (check `sumi-md.app`, `getsumi.md`, or similar at a registrar)
 - Free vs. paid
-- Minimum macOS version
