@@ -12,7 +12,7 @@ A lightweight, native macOS Markdown editor.
 - No library, no sync, no plugins
 
 ## Status
-Milestone 1 (skeleton) in progress: open, edit and save `.md` files in a plain-text editor.
+Milestone 1 (skeleton) done: open, edit and save `.md` files in a plain-text editor.
 Styling, the rendered view and preferences are next. See [PLAN.md](PLAN.md) for scope, architecture, and milestones.
 
 ## Building

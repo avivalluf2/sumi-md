@@ -39,15 +39,17 @@ xcodebuild -project SumiMD/SumiMD.xcodeproj -scheme SumiMD -destination 'platfor
 - Do not commit `xcuserdata/`, `DerivedData/` or `.DS_Store` (covered by `.gitignore`).
 
 ## Current state
-Milestone 1 (skeleton): `MarkdownDocument` (open/save `.md`), `MarkdownTextView` (plain-text
-editor), `DocumentGroup` app. These files were written without being compiled.
+Milestone 1 (skeleton) is done: `MarkdownDocument` (open/save `.md`), `MarkdownTextView`
+(plain-text editor), `DocumentGroup` app. Builds, runs, and saves text unchanged.
+Next: Milestone 2 (styling) on branch `milestone-2-styling`: add `swift-markdown`, a unit-test
+target, a styler that maps the parse tree to text attributes, and hook it into the editor.
 
-## First tasks for a local session
-1. `SumiMD/.git` is a stray repo Xcode created (one template commit). Confirm with
-   `git -C SumiMD log --oneline`, then remove `SumiMD/.git` so the root repo tracks the project.
-2. Rename `SumiMD/SumiMD/MyApp.swift` to `SumiMDApp.swift` (it contains `SumiMDApp`).
-3. Build, fix any compile errors, then verify open/edit/save of a `.md` file manually.
-4. Commit and push (with the user's go-ahead).
+## Notes
+- If `xcodebuild` says it needs Xcode, the active developer dir is Command Line Tools: prefix
+  commands with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
+- At launch the app shows the standard open panel (New Document / pick a file). That is normal.
+- "Unable to obtain a task name port right", "ViewBridge ... Terminated" and similar console
+  lines from the debugger or open/save panels are system noise, not app errors.
 
 ## Open decisions
 - `.md` document/imported type is declared in `SumiMD/Info.plist` (merged into the generated plist via `INFOPLIST_FILE`). Keep it outside the synced `SumiMD/SumiMD/` folder.
