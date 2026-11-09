@@ -10,6 +10,15 @@
       "Base",
     ],
   },
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/swiftlang/swift-markdown.git",
+      "version": {
+        "up-to-next-major-version": "0.9.0",
+      },
+    },
+  ],
   "files": [
     { "kind": "folder", "path": "SumiMD", "target-membership": [ "SumiMD" ] },
     {
@@ -17,8 +26,10 @@
       "name": "Products",
       "children": [
         { "path": "<PRODUCTS>/SumiMD.app", "id": "000000000000000000000120", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/SumiMDTests.xctest", "id": "799E817F30A256EC00E90B0C", "type": "wrapper.cfbundle", "index": false },
       ],
     },
+    { "kind": "folder", "path": "SumiMDTests", "target-membership": [ "SumiMDTests" ] },
   ],
   "targets": [
     {
@@ -30,6 +41,13 @@
         "compile-sources",
         "frameworks",
         "resources",
+      ],
+      "package-product-members": [
+        {
+          "package": "swift-markdown",
+          "product-name": "Markdown",
+          "build-phase": { "build-phase": "frameworks" },
+        },
       ],
       "build-settings": {
         "CODE_SIGN_STYLE": "Automatic",
@@ -53,6 +71,35 @@
         "SWIFT_EMIT_LOC_STRINGS": "YES",
         "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
         "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "SumiMDTests",
+      "id": "799E817E30A256EC00E90B0C",
+      "product": "Products/SumiMDTests.xctest",
+      "product-type": "bundle.unit-test",
+      "dependencies": [
+        "SumiMD",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "BUNDLE_LOADER": "$(TEST_HOST)",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "DEVELOPMENT_TEAM": "MUZWDF9A4D",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "devplaceholder.$(PROJECT_UNIQUE_VALUE:identifier).SumiMDTests",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SUPPORTED_PLATFORMS": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/SumiMD.app/Contents/MacOS/SumiMD",
       },
     },
   ],
